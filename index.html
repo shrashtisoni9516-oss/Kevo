@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#071a3b">
+<title>KEVO — A space for thoughts</title>
+<style>
+:root{
+  --navy:#071a3b; --navy2:#0b2450; --panel:#102b57; --panel2:#143363;
+  --blue:#a9dcff; --mint:#baf2df; --yellow:#ffe7a3; --lav:#d9ccff;
+  --pink:#ffcce1; --text:#f3f7ff; --muted:#b5c5df; --line:rgba(178,211,255,.15);
+  --shadow:0 16px 45px rgba(0,0,0,.22);
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 15% 0%,#12366a 0%,transparent 36%),radial-gradient(ellipse at 90% 25%,#142d55 0%,transparent 30%),var(--navy);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.25;background:repeating-linear-gradient(135deg,transparent 0 70px,rgba(169,220,255,.07) 71px 72px,transparent 73px 145px);mask-image:linear-gradient(to bottom,black,transparent 75%)}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1100px;margin:auto;padding:22px 18px 60px;position:relative}
+header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:8px 2px 24px}
+.brand{font-weight:850;letter-spacing:.22em;color:var(--blue);font-size:27px;text-decoration:none}
+.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:.2em;font-weight:600;margin-top:3px}
+.top-note{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:8px 12px;border-radius:30px}
+.hero{padding:36px 10px 28px;text-align:center}
+.eyebrow{color:var(--mint);letter-spacing:.2em;text-transform:uppercase;font-size:11px;font-weight:750}
+h1{font-size:clamp(34px,7vw,62px);line-height:1.05;margin:14px 0;color:var(--blue);letter-spacing:.035em}
+.hero p{max-width:560px;margin:0 auto;color:var(--muted);line-height:1.7;font-size:15px}
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:26px 0 30px}
+.tab{background:transparent;border:1px solid var(--line);color:var(--muted);padding:10px 16px;border-radius:30px}
+.tab.active,.tab:hover{background:#173967;color:var(--blue);border-color:#4775a9}
+.page{display:none}.page.active{display:block}
+.section-title{font-size:21px;margin:0 0 7px}.sub{color:var(--muted);font-size:13px;margin:0 0 20px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{background:linear-gradient(145deg,rgba(20,51,99,.94),rgba(12,36,75,.94));border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 8px;font-size:17px}.card p{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 14px}
+.pill{display:inline-flex;border-radius:30px;padding:6px 10px;font-size:11px;font-weight:700;color:#082044;background:var(--mint)}
+.pill.blue{background:var(--blue)}.pill.yellow{background:var(--yellow)}.pill.lav{background:var(--lav)}.pill.pink{background:var(--pink)}
+.big-emoji{font-size:34px;margin-bottom:12px}
+.action{border:0;background:var(--blue);color:#092044;font-weight:800;border-radius:13px;padding:11px 16px}
+.action.secondary{background:#203f70;color:var(--blue);border:1px solid var(--line)}
+.action:focus-visible,.tab:focus-visible,textarea:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+.result{margin-top:14px;padding:13px 14px;background:rgba(5,19,44,.55);border:1px solid var(--line);border-radius:14px;color:var(--mint);min-height:48px;line-height:1.5;font-size:14px}
+.scratch{border:1px dashed rgba(185,218,255,.45);background:linear-gradient(135deg,#1b477c,#213a70);border-radius:17px;padding:22px;text-align:center;min-height:148px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden}
+.scratch .cover{font-size:25px;letter-spacing:.15em;color:var(--blue);font-weight:850}
+.scratch.revealed{background:linear-gradient(135deg,rgba(186,242,223,.15),rgba(217,204,255,.13));border-style:solid}
+.scratch .reveal{font-size:15px;line-height:1.55;color:var(--text)}
+.discussion{display:grid;gap:12px}
+.post{background:rgba(15,43,85,.88);border:1px solid var(--line);border-radius:17px;padding:16px}
+.post-top{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.avatar{width:36px;height:36px;display:grid;place-items:center;background:#1e4775;border-radius:13px;font-size:20px}
+.post strong{font-size:13px}.post small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.post p{color:#dce8fa;font-size:14px;line-height:1.6;margin:8px 0 12px}
+.tag{font-size:10px;color:var(--mint);background:rgba(186,242,223,.1);padding:5px 8px;border-radius:20px}
+textarea{width:100%;min-height:100px;resize:vertical;background:#091f43;border:1px solid var(--line);border-radius:14px;padding:13px;color:var(--text);margin:8px 0 12px}
+.notice{border:1px solid rgba(255,231,163,.28);background:rgba(255,231,163,.07);color:#f8e8bd;border-radius:15px;padding:13px 15px;font-size:12px;line-height:1.6;margin:16px 0}
+.safety-list{display:grid;gap:10px;margin-top:16px}
+.safety-item{display:flex;gap:11px;align-items:flex-start;color:#dbe8fa;font-size:13px;line-height:1.5}
+.check{color:var(--mint);font-weight:900}
+footer{margin-top:35px;text-align:center;color:#91a9ca;font-size:11px;line-height:1.7}
+@media(max-width:680px){.grid{grid-template-columns:1fr}.shell{padding:16px 14px 45px}.hero{padding-top:24px}.top-note{font-size:10px}.card{padding:18px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <a class="brand" href="#" aria-label="KEVO home">KEVO<small>A SPACE FOR THOUGHTS</small></a>
+  <span class="top-note">A little space to be heard ✦</span>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Share • Discover • Create</div>
+  <h1>Different thoughts.<br>One open space.</h1>
+  <p>A gentle place to explore moods, express what's on your mind, exchange perspectives and bring ideas together — without chasing likes or popularity.</p>
+</section>
+
+<nav class="tabs" aria-label="Main navigation">
+  <button class="tab active" data-page="home">Home</button>
+  <button class="tab" data-page="discover">Discover</button>
+  <button class="tab" data-page="ideas">Thought space</button>
+  <button class="tab" data-page="safety">Safety</button>
+</nav>
+
+<main>
+<section class="page active" id="home">
+  <h2 class="section-title">What’s your vibe today?</h2>
+  <p class="sub">Start small. You don't have to explain everything.</p>
+  <div class="grid">
+    <article class="card">
+      <div class="big-emoji">🎡</div><span class="pill">Mood spin</span>
+      <h3 style="margin-top:12px">Let the wheel choose</h3>
+      <p>Give the day a name. Spin for a gentle mood check-in — no mood is wrong.</p>
+      <button class="action" id="moodSpin">Spin for a mood</button>
+      <div class="result" id="moodResult" aria-live="polite">Your result will appear here.</div>
+    </article>
+    <article class="card">
+      <div class="big-emoji">💭</div><span class="pill lav">Thought spin</span>
+      <h3 style="margin-top:12px">A thought to explore</h3>
+      <p>Get a random question to help you reflect, imagine or start a conversation.</p>
+      <button class="action" id="thoughtSpin">Spin for a thought</button>
+      <div class="result" id="thoughtResult" aria-live="polite">A little prompt is waiting.</div>
+    </article>
+    <article class="card">
+      <div class="big-emoji">🎟️</div><span class="pill yellow">Mood scratch card</span>
+      <h3 style="margin-top:12px">Reveal a mood prompt</h3>
+      <p>Tap the card to uncover a small check-in.</p>
+      <div class="scratch" id="moodScratch"><div class="cover">SCRATCH & REVEAL</div><button class="action secondary" data-scratch="mood">Reveal card</button></div>
+    </article>
+    <article class="card">
+      <div class="big-emoji">✨</div><span class="pill pink">Thought scratch card</span>
+      <h3 style="margin-top:12px">A surprise thought</h3>
+      <p>One small question can open up a whole new idea.</p>
+      <div class="scratch" id="thoughtScratch"><div class="cover">SCRATCH & REVEAL</div><button class="action secondary" data-scratch="thought">Reveal card</button></div>
+    </article>
+  </div>
+  <div class="notice">KEVO prototype: these activities run in your browser. Nothing you type here is sent to other people.</div>
+</section>
+
+<section class="page" id="discover">
+  <h2 class="section-title">Discover a conversation</h2>
+  <p class="sub">Thought starters for kind, curious discussions. These are sample prompts, not live users.</p>
+  <div class="discussion">
+    <article class="post"><div class="post-top"><div class="avatar">🌱</div><div><strong>A small question</strong><small>Sample community prompt</small></div><span class="tag">Feelings</span></div><p>What's one little thing that made today feel a bit lighter?</p></article>
+    <article class="post"><div class="post-top"><div class="avatar">🪐</div><div><strong>Different perspectives</strong><small>Sample community prompt</small></div><span class="tag">Ideas</span></div><p>Can two people see the same situation differently and both have a point?</p></article>
+    <article class="post"><div class="post-top"><div class="avatar">🧩</div><div><strong>Let's combine ideas</strong><small>Sample community prompt</small></div><span class="tag">Create</span></div><p>Imagine a quiet corner in your school or neighbourhood designed by students. What belongs there?</p></article>
+  </div>
+</section>
+
+<section class="page" id="ideas">
+  <h2 class="section-title">Your thought space</h2>
+  <p class="sub">Write a thought, idea or reflection for yourself. This demo saves it only in this browser.</p>
+  <div class="card">
+    <label for="thoughtInput"><strong>What's on your mind?</strong></label>
+    <textarea id="thoughtInput" maxlength="500" placeholder="Write a thought, a question, or an idea..."></textarea>
+    <button class="action" id="saveThought">Save on this device</button>
+    <div class="result" id="saveResult" aria-live="polite">Your private note will appear here.</div>
+  </div>
+  <div class="notice">Private demo note: it is stored locally in this browser only. It is not posted publicly and cannot be seen by other KEVO visitors.</div>
+</section>
+
+<section class="page" id="safety">
+  <h2 class="section-title">Safety comes first.</h2>
+  <p class="sub">KEVO should feel welcoming without asking anyone to give up their privacy.</p>
+  <div class="card">
+    <span class="pill">KEVO safety principles</span>
+    <div class="safety-list">
+      <div class="safety-item"><span class="check">✓</span><span>No personal direct messages inside KEVO.</span></div>
+      <div class="safety-item"><span class="check">✓</span><span>No real-person profile photos; use expressive illustrated avatars instead.</span></div>
+      <div class="safety-item"><span class="check">✓</span><span>No follower counts, popularity rankings or pressure to collect likes.</span></div>
+      <div class="safety-item"><span class="check">✓</span><span>Never share your address, school, phone number, passwords or live location with strangers.</span></div>
+      <div class="safety-item"><span class="check">✓</span><span>People should be able to leave a conversation and seek help from a trusted adult if something feels uncomfortable.</span></div>
+      <div class="safety-item"><span class="check">✓</span><span>A real public community needs working reporting, blocking, moderation and privacy controls before launch.</span></div>
+    </div>
+  </div>
+  <div class="notice"><strong>Important:</strong> This is a front-end prototype, not a live social network. It has no accounts, server, public posting, messaging or moderation system. We must build and test those safety systems before allowing strangers to interact.</div>
+</section>
+</main>
+
+<footer>KEVO · A space for thoughts, not popularity.<br>Early prototype — built with privacy and safety in mind.</footer>
+</div>
+<script>
+const moods=["Curious","A little overwhelmed","Hopeful","Calm","Unsure — and that's okay","Creative","Grateful","In need of a pause","Ready for something new","Quietly happy"];
+const thoughts=[
+  "What's something you wish more people understood?",
+  "If you could learn one new skill just for fun, what would it be?",
+  "What makes a place feel welcoming?",
+  "Can a small idea grow into something meaningful?",
+  "What's one opinion you've changed your mind about?",
+  "What would you create if you could team up with anyone?",
+  "What helps you feel listened to?",
+  "What's a question you've always wanted to ask?"
+];
+const moodScratch=[
+  "Name one feeling you're carrying today. You don't have to fix it.",
+  "What is one small thing you need more of this week?",
+  "If your mood had a weather forecast, what would it be?",
+  "What is one kind thing you could tell yourself today?"
+];
+const thoughtScratch=[
+  "What is an everyday problem you wish someone would solve?",
+  "What two very different ideas could you combine?",
+  "What does a good friend do that makes you feel respected?",
+  "If you could add one helpful thing to your community, what would it be?"
+];
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+document.getElementById("moodSpin").addEventListener("click",()=>document.getElementById("moodResult").textContent="Today you might be feeling: "+pick(moods)+". Whatever it is, it's okay.");
+document.getElementById("thoughtSpin").addEventListener("click",()=>document.getElementById("thoughtResult").textContent=pick(thoughts));
+document.querySelectorAll("[data-scratch]").forEach(btn=>btn.addEventListener("click",()=>{
+  const kind=btn.dataset.scratch, box=document.getElementById(kind+"Scratch");
+  const prompt=pick(kind==="mood"?moodScratch:thoughtScratch);
+  box.classList.add("revealed");
+  box.innerHTML='<div class="pill '+(kind==="mood"?"":"lav")+'">YOUR REVEAL</div><div class="reveal">'+prompt+'</div><button class="action secondary" onclick="location.reload()">Try another</button>';
+}));
+document.getElementById("saveThought").addEventListener("click",()=>{
+  const input=document.getElementById("thoughtInput"), out=document.getElementById("saveResult");
+  const value=input.value.trim();
+  if(!value){out.textContent="Write a little something first.";return}
+  try{
+    const notes=JSON.parse(localStorage.getItem("kevo_private_notes")||"[]");
+    notes.unshift({text:value,date:new Date().toLocaleString()});
+    localStorage.setItem("kevo_private_notes",JSON.stringify(notes.slice(0,20)));
+    out.textContent="Saved privately on this device. It has not been shared.";
+    input.value="";
+  }catch(e){out.textContent="This browser couldn't save the note. You can copy it somewhere private instead."}
+});
+document.querySelectorAll(".tab").forEach(tab=>tab.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t===tab));
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===tab.dataset.page));
+  window.scrollTo({top:0,behavior:"smooth"});
+}));
+</script>
+</body>
+</html>
